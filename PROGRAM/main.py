@@ -1,20 +1,26 @@
 import time
 import imp
 
-# Run every 10 mins
+# Run every 10 minsx
 
 
 readerModule = imp.load_source("reader", "PROGRAM/modules/reader.py")
 
-stock = "CVE"
-finder = readerModule.StockReader(stock, "1d", "1m")
-sell = finder.lastTwoDifferencesInPrice()
-print(sell)
+stock = ["AEM"]
+bought = False
 
-# if __name__ == "__main__":
-#      while True:
-#          time.sleep(120)
-#          if
+
+if __name__ == "__main__":
+    while True:
+        time.sleep(60)
+
+        if bought == True:
+            finder = readerModule.StockReader(stock, "1d", "1m")
+            sell = finder.lastTwoDifferencesInPrice()
+            if sell == False:
+                print("Hold")
+            else:
+                print("Sell")
 
 
 # from wsimple.api import Wsimple

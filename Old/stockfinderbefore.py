@@ -66,41 +66,24 @@ tsx_list = [
     "TFII",
 ]
 
-
 goodlist = []
 bad = []
-
+good = ""
 tsx_list1 = ["NXE"]
 run = True
 
 
-def standardDeviationChecker1(reader):
-    standardDeviation = statistics.stdev(reader)
-    mean = statistics.mean(reader)
-    z = -1.28
-    zScore = (z * standardDeviation) + mean
-
-    if standardDeviation > 1:
-        return False
-    else:
-        return zScore
-
-
-def stockFinder():
-    good = ""
-
+while run == True:
     for stock in tsx_list:
         finder = readerModule.StockReader(stock, "1d", "1m")
-        rld = finder.regressionLineDrawer()
-
-        standardDeviation = standardDeviationChecker1(rld[1])
+        standardDeviation = finder.standardDeviationChecker()
         lastPrice = finder.lastPrice()
 
         # print(stock, lastPrice, standardDeviation)
 
-        breakOfPattern = finder.BreakOfPattern()
+        print(lastPrice, standardDeviation)
 
-        if (standardDeviation == False) or (breakOfPattern == True):
+        if standardDeviation == False:
             bad.append(stock)
         elif lastPrice <= standardDeviation:
             goodlist.append(stock)
@@ -116,13 +99,6 @@ def stockFinder():
 
     print(good)
 
-    return goodlist
-
-    # time.sleep(60)
-    # goodlist.clear()
-    # bad.clear()
-    # good = ""
-
-
+    time.sleep(60)
 
 # traderModule.Indicator(good).sendNotificationMac()
