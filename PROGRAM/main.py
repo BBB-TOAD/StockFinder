@@ -1,47 +1,75 @@
-import time
 import imp
-
-# Run every 10 minsx
-
+from datetime import datetime
+import time
+import statistics
 
 readerModule = imp.load_source("reader", "PROGRAM/modules/reader.py")
+traderModule = imp.load_source("trader", "PROGRAM/modules/trader.py")
+regressionLineModule = imp.load_source(
+    "regressionLine", "PROGRAM/modules/regressionLine.py"
+)
 
-stock = ["AEM"]
-bought = False
+tsx_list = [
+    "NTR",
+    "MG",
+    "SAP",
+    "STN",
+    "DOO",
+    "BBD-B",
+    "SHOP",
+    "TRI",
+    "OTEX",
+    "NXE",
+    "NVEI",
+    "DSG",
+    "GIB-A",
+    "SU",
+    "CVE",
+    "IMO",
+    "CNQ",
+    "TOU",
+    "CCO",
+    "EMA",
+    "FM",
+    "TECK-B",
+    "AEM",
+    "WFG",
+    "ABX",
+    "FNV",
+    "BMO",
+    "RY",
+    "TD",
+    "IGM",
+    "WN",
+    "MFC",
+    "BNS",
+    "CM",
+    "QSR",
+    "ATD",
+    "DOL",
+    "TIH",
+    "EMP-A",
+    "CNR",
+    "CP",
+    "EFN",
+    "AC",
+    "CCL-B",
+    "TFII",
+]
+
+tsx_list1 = regressionLineModule.stockFinder()
 
 
-if __name__ == "__main__":
-    while True:
-        time.sleep(60)
+# for good symbols
+for stocks in tsx_list1[0]:
+    finder = readerModule.StockReader(stocks, "1d", "2m")
+    stockCategory = finder.stockCategorization()
+    print(stocks + " : " + stockCategory)
+    if stockCategory == "rzone":
+        pass
+    elif stockCategory == "channel":
+        pass
+    elif stockCategory == "downTrend":
+        pass
 
-        if bought == True:
-            finder = readerModule.StockReader(stock, "1d", "1m")
-            sell = finder.lastTwoDifferencesInPrice()
-            if sell == False:
-                print("Hold")
-            else:
-                print("Sell")
-
-
-# from wsimple.api import Wsimple
-
-
-# def get_otp():
-#     return input("Enter otpnumber: \n>>>")
-
-
-# email = str(input("Enter email: \n>>>"))
-# password = str(input("Enter password: \n>>>"))
-# stock = "NXE.TO"
-# stockAmount = 1000
-
-# ws = Wsimple(email, password, otp_callback=get_otp)
-
-# # always check if wealthsimple is working (return True if working or an error)
-# if ws.is_operational():
-#     # check the current operation status of internal Wealthsimple Trade
-#     print(ws.current_status())
-#     # Make a Market Order
-#     ws.market_buy_order(stock, stockAmount)
-#     # Make a Market Sell
-#     ws.market_sell_order(stock, stockAmount)
+# for break of pattern symbols

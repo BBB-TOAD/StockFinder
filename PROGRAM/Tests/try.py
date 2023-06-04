@@ -1,7 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
+s = 3818
 
+for i in range(32):
+    s += s * 0.09857
+    s += 1000
 
-alist = [1, 2, 3, 4, 5]
-
-print(alist[-2])
+print(s)
